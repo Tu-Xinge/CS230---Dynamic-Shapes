@@ -1,17 +1,20 @@
-package cs230.A2Code;/*
+/*
  *	===============================================================================
  *	RectangleShape.java : A shape that is a rectangle.
  *  YOUR UPI: xtu424
+ *  Student Name: Xinge Tu
+ *  Date: 06/06
  *	=============================================================================== */
 import java.awt.*;
-import java.awt.Shape;
-
 class RectangleShape extends Shape {
 
 	/** constructor to create a rectangle with default values */
 	public RectangleShape() { super(); }
 	public RectangleShape(int x, int y, int w, int h, int mw, int mh, Color bc, Color fc, PathType pt) {
 		super(x ,y ,w, h ,mw ,mh, bc, fc, pt);
+	}
+	public RectangleShape(int x, int y, int w, int h, int mw, int mh, Color bc, Color fc, PathType pt, String text) {
+		super(x ,y ,w, h ,mw ,mh, bc, fc, pt, text);
 	}
 	/** draw the rectangle with the fill colour
 	 *	If it is selected, draw the handles

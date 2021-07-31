@@ -1,11 +1,13 @@
-package cs230.A2Code;/*
+import java.awt.*;
+import java.awt.Graphics2D;
+/*
  *  ============================================================================================
  *  Text version of a painter
  *  YOUR UPI: xtu424
+ *  Student Name: Xinge Tu
+ *  Date: 06/06
  *  ============================================================================================
  */
-
-import java.awt.*;
 public class GraphicsPainter implements Painter {
 	private Graphics2D g;
 	public GraphicsPainter() { }
@@ -37,6 +39,17 @@ public class GraphicsPainter implements Painter {
 		g.setPaint(c);
 	}
 	@Override
+	public void drawCenteredText(String text, int x, int y, int width, int height) {
+		FontMetrics fm = g.getFontMetrics();
+		int stringWidth = fm.stringWidth(text);
+		int ascent = fm.getAscent();
+		int descent = fm.getDescent();
+		int font_x = (width - stringWidth)/2;
+		int font_y = ascent + (height - (ascent + descent))/2;
+		g.setPaint(Color.black);
+		g.drawString("" + text, x + font_x, y + font_y);
+	}
+	@Override
 	public void drawHandles(boolean isSelected, int x, int y, int width, int height) {
 		if (isSelected) {
             g.setPaint(Color.black);
@@ -47,9 +60,7 @@ public class GraphicsPainter implements Painter {
         }
 	}
 	@Override
-	public void drawImage(Image img, int x, int y, int width, int height) {
-		// TODO Auto-generated method stub
-		g.drawImage(img, x, y, width, height, null);
-		
+	public void translate(int x, int y) {
+		g.translate(x, y);
 	}
 }

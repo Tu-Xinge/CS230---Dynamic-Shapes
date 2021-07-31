@@ -1,7 +1,9 @@
-package cs230.A2Code;/*
+/*
  *	===============================================================================
  *	XRectangleShape.java : A shape that is a xrectangle.
  *  YOUR UPI: xtu424
+ *  Student Name: Xinge Tu
+ *  Date: 06/06
  *	=============================================================================== */
 import java.awt.*;
 class XRectangleShape extends RectangleShape {
@@ -10,6 +12,9 @@ class XRectangleShape extends RectangleShape {
 	public XRectangleShape() { super(); }
 	public XRectangleShape(int x, int y, int w, int h, int mw, int mh, Color bc, Color fc, PathType pt) {
 		super(x ,y ,w, h ,mw ,mh, bc, fc, pt);
+	}
+	public XRectangleShape(int x, int y, int w, int h, int mw, int mh, Color bc, Color fc, PathType pt, String text) {
+		super(x ,y ,w, h ,mw ,mh, bc, fc, pt, text);
 	}
 	/** draw the rectangle with the fill colour
 	 *	If it is selected, draw the handles

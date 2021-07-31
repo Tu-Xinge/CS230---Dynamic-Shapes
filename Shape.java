@@ -1,24 +1,35 @@
-package cs230.A2Code;/*
+/*
  *    ===============================================================================
- *    YOUR UPI: xtu424
  *    Shape.java : The superclass of all shapes.
  *    A shape defines various properties, including selected, colour, width and height.
+ *    YOUR UPI: xtu424
+ *    Student Name: Xinge Tu
+ *    Date: 06/06
  *    ===============================================================================
  */
+
 import java.awt.*;
 public abstract class Shape {
     public static final PathType DEFAULT_PATHTYPE = PathType.BOUNCE;
     public static final ShapeType DEFAULT_SHAPETYPE = ShapeType.RECTANGLE;
     public static final int DEFAULT_X = 0, DEFAULT_Y = 0, DEFAULT_WIDTH=100, DEFAULT_HEIGHT=50, DEFAULT_MARGIN_WIDTH=600, DEFAULT_MARGIN_HEIGHT=800;
     public static final Color DEFAULT_FILL_COLOR=Color.orange, DEFAULT_BORDER_COLOR=Color.blue;
-    public static final String DEFAULT_IMAGE_FILENAME="java.gif";
-    public int x, y, width, height, marginWidth, marginHeight; // the margin of the animation panel area
+    public static final String DEFAULT_TEXT = "A4";
+
+    public int x, y, width, height, marginWidth, marginHeight;
     protected MovingPath path;            // the moving path
     protected Color borderColor, fillColor; // the border colour
     protected boolean selected = false;    // draw handles if selected
+    protected String text = DEFAULT_TEXT;
+	protected NestedShape parent;
+
     /** default constructor to create a shape with default values */
     public Shape() {
         this(DEFAULT_X, DEFAULT_Y, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MARGIN_WIDTH, DEFAULT_MARGIN_HEIGHT, DEFAULT_BORDER_COLOR,DEFAULT_FILL_COLOR, DEFAULT_PATHTYPE); // the default properties
+    }
+    /** constructor to create a shape with default values for square */
+    public Shape(int size) {
+        this(DEFAULT_X, DEFAULT_Y, size, size, DEFAULT_MARGIN_WIDTH, DEFAULT_MARGIN_HEIGHT, DEFAULT_BORDER_COLOR,DEFAULT_FILL_COLOR, DEFAULT_PATHTYPE); // the default properties
     }
     /** constructor to create a shape
      * @param x         the x-coordinate of the new shape
@@ -32,18 +43,25 @@ public abstract class Shape {
     public Shape(int x, int y, int w, int h, int mw, int mh, Color bc, Color fc, PathType pt) {
         this.x = x;
         this.y = y;
+        width = w;
+        height = h;
         marginWidth = mw;
         marginHeight = mh;
-        width = validateWidth(w);
-        height = validateHeight(h);
         borderColor = bc;
         fillColor = fc;
         setPath(pt);
     }
-    /** Return a string representation of the shape, containing
-     * the String representation of each element. */
+    public Shape(int x, int y, int w, int h, int mw, int mh, Color bc, Color fc, PathType pt, String text) {
+        this(x,y,w,h,mw,mh,bc,fc,pt);
+        this.text = text;
+    }
+	public String getText() { return text; }
+	public void setText(String t) { text = t; }
+	public void drawCenteredText(Painter g) {
+		g.drawCenteredText(text, x, y, width, height);
+	}
     public String toString() {
-        return String.format("[%s:(%d,%d) %d x %d]", this.getClass().getName(), x,y,width,height);
+        return String.format("[%s:(%d,%d) %d x %d %s]", this.getClass().getName(), x,y,width,height,text);
     }
     /** Set the path of the shape.
      * @param pathID     the path  */
@@ -52,12 +70,15 @@ public abstract class Shape {
             case BOUNCE : {
                 path = new BouncingPath(1, 2);
                 break;
-            } case FALL: {
+            }
+			case FALL: {
 				path = new FallingPath(2);
 				break;
 			}
 		}
     }
+    public NestedShape getParent() {return parent;}
+	public void setParent(NestedShape s) {parent = s;}
     /** Return the x-coordinate of the shape.
      * @return the x coordinate */
     public int getX() { return this.x; }
@@ -89,8 +110,7 @@ public abstract class Shape {
 	public int getHeight() {return height; }
     /** Set the height of the shape.
      * @param h     the height value */
-    public void setHeight(int h) { height = validateHeight(h); }
-
+    public void setHeight(int h) { height = validateHeight(h);}
     /** Return the selected property of the shape.
      * @return the selected property  */
     public boolean isSelected() { return selected; }
@@ -105,7 +125,6 @@ public abstract class Shape {
     /** Set the border colour of the shape.
      * @param c     the border colour */
     public void setBorderColor(Color c) { borderColor = c; }
-
     /** Return the fill colour of the shape.
      * @return the fill colour */
 	public Color getFillColor() { return fillColor; }
@@ -181,8 +200,13 @@ public abstract class Shape {
              }
         }
     }
+	/*
+	 *  ===============================================================================
+	 *  BouncingPath : A Bouncing path.
+	 *  ===============================================================================
+	 */
 	class FallingPath extends MovingPath {
-		 /** constructor to initialise values for a falling path */
+		 /** constructor to initialise values for a bouncing path */
 		public FallingPath(int dy) {
 			deltaY = dy;
 		 }

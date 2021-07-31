@@ -1,11 +1,13 @@
-package cs230.A2Code;/*
+/*
  *  ============================================================================================
  *  enum which defines the type of shapes in A1
  *  YOUR UPI: xtu424
+ *  Student Name: Xinge Tu
+ *  Date: 06/06
  *  ============================================================================================
  */
 import java.util.*;
-enum ShapeType { RECTANGLE, XRECTANGLE, SQUARE, OVAL, DYNAMIC, IMAGE;
+public enum ShapeType { RECTANGLE, XRECTANGLE, SQUARE, OVAL, NESTED ;
 	private static final Random rand = new Random();
 	private static final int SIZE = values().length;
 	public static final ShapeType getShapeType(int index) { return values()[index]; }

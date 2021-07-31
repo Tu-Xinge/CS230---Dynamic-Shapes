@@ -1,7 +1,9 @@
-package cs230.A2Code;/*
+/*
  *	===============================================================================
  *	SquareShape.java : A shape that is a square.
  *  YOUR UPI: xtu424
+ *  Student Name: Xinge Tu
+ *  Date: 06/06
  *	=============================================================================== */
 import java.awt.*;
 class SquareShape extends RectangleShape {
@@ -12,6 +14,10 @@ class SquareShape extends RectangleShape {
 	}
 	public SquareShape(int x, int y, int s, int mw, int mh, Color bc, Color fc, PathType pt) {
 		super(x ,y ,s, s ,mw ,mh, bc, fc, pt);
+		validateSquare();
+	}
+	public SquareShape(int x, int y, int s, int mw, int mh, Color bc, Color fc, PathType pt, String text) {
+		super(x ,y ,s, s ,mw ,mh, bc, fc, pt, text);
 		validateSquare();
 	}
 	/** validate the height and width of the square. */
